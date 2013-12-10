@@ -106,6 +106,57 @@ def getPhoto():
 
 	return json.dumps(jsonPacket)
 
+
+@app.route("/getBoothPhotos")
+def getBoothPhotos():
+	booth_url = 'http://localhost/booth_test/booth_test.json?' + str( random.randint(0, 10000) );
+
+	# load json from url
+	r = requests.get(booth_url)
+	booth_json = r.json()
+
+	json_packet = {
+		'photos' : []
+	}
+
+	print booth_json
+
+
+	# image data is located in data attr
+	for dic in booth_json["photos"]:
+		photo_url = {}
+		
+		try:
+			photo_url['url'] = dic["url"]
+			print photo_url['url']
+			saveImage(photo_url['url'], path);
+		except:
+			print "PROBLEM SAVING"
+	
+	
+	# sort the files in the folder by most recent
+	# os.chdir(payloadPath)
+	# files = filter(os.path.isfile, os.listdir(payloadPath))
+	# files = [os.path.join(payloadPath, f) for f in files] # add path to each file
+	# sortedFiles = sorted(files, key=mtime)
+	# sortedFiles.reverse()
+	
+
+	# grab the 10 most recent instagram photos
+	# for i in range(10):
+	# 	photo_urls = {}
+	# 	filename = sortedFiles[i]
+	# 	if filename.endswith( gif_suffix ) or filename.endswith( jpg_suffix ):
+	# 		photo_urls['url'] = filename
+	# 		json_packet['photos'].append(photo_urls)
+
+
+	# return json.dumps(json_packet)
+	# return "{}"
+	return getPhoto()
+
+
+
 @app.route("/getInstagram")
 def getInstagram():
 	# tag to use in url
@@ -260,15 +311,16 @@ def make_master_json():
 		# print filenames
 		for (filename) in filenames:
 			if filename.endswith( gif_suffix ) or filename.endswith( jpg_suffix ):
-				# print filename
+				
 				photo_urls = {}
 				photo_urls['url'] = dirpath + "/" + os.path.basename(filename)
+				print photo_urls
 				jsonPacket['photos'].append(photo_urls)
 		# f.extend(filenames)
 		# break
 	
 	# booth_files = json.dumps(jsonPacket)
-	#return json.dumps(jsonPacket)
+	# return json.dumps(jsonPacket)
 	return jsonPacket
 	
 

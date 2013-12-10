@@ -61,7 +61,8 @@ void ProjectionApp::setup()
 	
 	// the list if urls that that the app will be pulling photos from. It goes through them one by one as it needs to photos to fill the queue
 //	vector<string> urls = {"http://localhost:5000/getPhoto", "http://localhost:5000/getInstagram", "http://localhost:5000/getUserInstagram/tbg", "http://localhost:5000/getUserInstagram/webbys"};
-	vector<string> urls = {"http://localhost:5000/getUserInstagram/tbg"};
+//	vector<string> urls = {"http://localhost:5000/getUserInstagram/tbg"};
+	vector<string> urls = {"http://localhost:5000/getBoothPhotos"};
 	
 	//	mPhotoStream = make_shared<PhotoStream>( "http://localhost/RoofiesWebbys/photos/photos.json" ); // test url for running without pythong scripts running
 	mPhotoStream = make_shared<PhotoStream>( urls );
